@@ -1,0 +1,90 @@
+﻿<UserControl
+    x:Class="LabiMS.Controls._2PointCalibrationUC"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:helpers="using:LabiMS.Helpers"
+    xmlns:controlss="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:oks="using:TCD.Controls.Keyboard"
+    mc:Ignorable="d"
+    d:DesignHeight="200"
+    >
+    <UserControl.Resources>
+        <helpers:EnumFocusToBoolConverter x:Key="EnumFocusToBoolConverter"/>
+    </UserControl.Resources>
+    
+    <!--d:DesignWidth="400"-->
+    <Grid Background="{ThemeResource UCBackgroundColor}">
+        <ScrollViewer>
+            <Grid>
+                <controlss:Expander VerticalAlignment="Top" MinHeight="160"   Header="{x:Bind Header}"  HorizontalContentAlignment="Stretch" Foreground="White"  Background="Gray" IsExpanded="True" ExpandDirection="Down">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="60"/>
+                        </Grid.RowDefinitions>
+
+                        <Border BorderBrush="Black" BorderThickness="0,0,0,0" >
+                            <TextBlock Text="T1 - minimum" FontSize="32" HorizontalAlignment="Left" Margin="22,0,0,0"/>
+                        </Border>
+
+
+                        <Border BorderBrush="Gray" BorderThickness="0,0,0,1"  Grid.Row="0" >
+                            <TextBlock x:Uid="2PointCalibrationUC_CurentT" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <Border BorderBrush="Gray" BorderThickness="0,0,0,0"  Grid.Row="1" Margin="-3,0,3,0">
+                            <TextBlock  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Bind CurrentTemperature,Mode=OneWay}" VerticalAlignment="Top" FontSize="52" Foreground="Chartreuse" FontWeight="Bold"/>
+                        </Border>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Left">
+                            <AppBarButton Click="SaveT1Click" Icon="Save" x:Uid="2PointCalibrationUC_SacuvajT1" Margin="22,0,22,0" Style="{StaticResource AppBarButtonStyleVeliki}" IsEnabled="{Binding FocusState, ElementName=TxbT1min, Mode=OneWay, Converter={StaticResource EnumFocusToBoolConverter}}"  Width="80" Background="Orange" Foreground="Black"></AppBarButton>
+
+
+                            <Border BorderBrush="Gray" BorderThickness="0,0,0,0"  Grid.Row="1" >
+                                <TextBox Name="TxbT1min" Style="{StaticResource TextBoxStyleVelikCentar}" Text="0.0" Width="80" FontSize="32" ></TextBox>
+                            </Border>
+                            <Border BorderBrush="Gray" BorderThickness="0,0,0,1"  Grid.Row="1" >
+                                <TextBlock x:Uid="2PointCalibrationUC_KontrolnaT"  FontSize="24" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Margin="4,0,0,0"/>
+                            </Border>
+                        </StackPanel>
+
+
+
+                        <Border BorderBrush="Black" BorderThickness="0,0,0,0" HorizontalAlignment="Right" >
+                            <TextBlock Text="T2 - maksimum" FontSize="32"  HorizontalAlignment="Left" Margin="0,0,20,0"/>
+                        </Border>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right">
+                            <Border BorderBrush="Gray" BorderThickness="0,0,0,1"  Grid.Row="1" >
+                                <TextBlock x:Uid="2PointCalibrationUC_KontrolnaT" FontSize="24" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Margin="0,0,0,4"/>
+                            </Border>
+
+                            <Border BorderBrush="Gray" BorderThickness="0.5,0,0,1"  Grid.Row="1" >
+                                <TextBox Name="TxbT2max" Style="{StaticResource TextBoxStyleVelikCentar}" Text="0.0" Width="80" FontSize="32" ></TextBox>
+                            </Border>
+                            <AppBarButton Icon="Save" Click="SaveT2Click" x:Uid="2PointCalibrationUC_SacuvajT2" Margin="22,0,22,0" Style="{StaticResource AppBarButtonStyleVeliki}" IsEnabled="{Binding FocusState, ElementName=TxbT2max,Mode=OneWay, Converter={StaticResource EnumFocusToBoolConverter}}" Width="80" Background="Orange" Foreground="Black" >
+
+                            </AppBarButton>
+                        </StackPanel>
+
+                    </Grid>
+                    <controlss:Expander.ContentOverlay>
+                        <Grid Background="DarkGray" MinHeight="160">
+                            <TextBlock   HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="20,0,0,0">
+                                                <LineBreak/>
+                                                <Run Text="Kalibracija ulaza za Pt100 sonde se obavlja u dve tačke. T1 pri donjaj delu mernog opsega, T2 pri gornjem delu opsega." FontSize="24" Foreground="Black"/>
+                                                 <LineBreak/>
+                                                <LineBreak/>
+                                                <Run Text="Unesite izmerenu vrednost kontrolnog termometra u polje T1, zatim potvrdite, ponovite za T2. " Foreground="Black" FontSize="24"/>
+                            </TextBlock>
+                        </Grid>
+                    </controlss:Expander.ContentOverlay>
+                </controlss:Expander>
+            </Grid>
+        </ScrollViewer>
+
+        <oks:OnScreenKeyBoard  Grid.Row="2" Name="keyboard" InitialLayout="Serbian" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0,0,0,0" />
+
+    </Grid>
+</UserControl>
